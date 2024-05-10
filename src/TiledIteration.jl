@@ -25,7 +25,7 @@ struct EdgeIterator{N,UR1,UR2}
     outer::CartesianIndices{N,UR1}
     inner::CartesianIndices{N,UR2}
     function EdgeIterator{N,UR1,UR2}(outer::CartesianIndices{N}, inner::CartesianIndices{N}) where {N,UR1,UR2}
-        ((first(inner) ∈ outer) & (last(inner) ∈ outer)) || throw(DimensionMismatch("$inner must be in the interior of $outer"))
+        issubset(inner, outer) || throw(DimensionMismatch("$inner must be in the interior of $outer"))
         new(outer, inner)
     end
 end
